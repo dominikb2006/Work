@@ -1,0 +1,81 @@
+Option Explicit
+
+Private dNAME As Object
+Private dUNIT As Object
+Private dAMOUNT As Object
+
+Private Sub Class_Initialize()
+'
+'Description and units
+'Opis i jednostki - DO ZMIANY W PRZYPADKU ZMIAN KODU
+'
+    Set dNAME = CreateObject("Scripting.Dictionary")
+    Set dUNIT = CreateObject("Scripting.Dictionary")
+    Set dAMOUNT = CreateObject("Scripting.Dictionary")
+    
+             'KEY    NAME             UNIT  AMOUNT
+             
+    Add_value "ZIE", "Roboty ziemne", "m3", R_CUT
+    Add_value "SZCZ", "Ścianka szczelinowa", "m3", R_VOLUME
+    Add_value "CHB", "Chudy beton", "m3", R_VOLUME
+    Add_value "KRA", "Krawędzie płyt", "m3", R_VOLUME
+    Add_value "FLW", "Ławy fundamentowe", "m3", R_VOLUME
+    Add_value "FPL", "Płyty fundamentowe", "m3", R_VOLUME
+    Add_value "FST", "Stopy fundamentowe", "m3", R_VOLUME
+    Add_value "POD", "Podciągi żelbetowe", "m3", R_VOLUME
+    Add_value "KON", "Konsole żelbetowe", "m3", R_VOLUME
+    Add_value "SCH", "Schody żelbetowe", "szt.", R_COUNT
+    Add_value "SPO", "Spoczniki żelbetowe", "m2", R_AREA
+    Add_value "RMP", "Rampy żelbetowe", "m2", R_AREA
+    Add_value "SCZ", "Ściany żelbetowe", "m2", R_AREA
+    Add_value "SCS", "Ściany żelbetowe szachtu", "m2", R_AREA
+    Add_value "SLP", "Słupy żelbetowe prostokątne", "m3", R_VOLUME
+    Add_value "SLO", "Słupy żelbetowe okrągłe", "m3", R_VOLUME
+    Add_value "STR", "Stropy żelbetowe", "m2", R_AREA
+    Add_value "SCM", "Ściany murowane", "m2", R_AREA
+    Add_value "DOD", "Elementy dodatkowe", "kpl.", "1"
+    Add_value "USZ", "Uszczelnienia", "kpl.", "1"
+    Add_value "PREF", "Prefabrykaty", "kpl.", "1"
+    Add_value "PRZE", "Przesłony poziome", "kpl.", "1"
+    Add_value "STA", "Konstrukcje stalowe", "t", R_REINFORCEMENT
+    Add_value "GRZ", "Grzybki żelbetowe", "m3", R_VOLUME
+    Add_value "TRZ", "Trzpienie i wieńce ścian murowanych", "m.b.", R_LENGTH
+    Add_value "CMX", "Zbrojenie Comax", "szt.", R_COUNT
+    Add_value "IZO", "Izolacje", "kpl.", "1"
+    Add_value "WSP", "Wsporniki żelbetowe", "m3", R_VOLUME
+    Add_value "ATT", "Attyki żelbetowe", "m2", R_AREA
+    Add_value "KER", "Podsypka keramzytowa", "m3", R_VOLUME
+    
+'    Add_value "ROZ", "Rozbiórki", "kpl.", "1"
+'    Add_value "BER", "Ścianka berlińska", "m2", R_AREA
+End Sub
+
+Private Sub Add_value(KEY As Variant, name As Variant, unit As Variant, Optional amount As Variant)
+    dNAME.Add item:=name, KEY:=KEY
+    dUNIT.Add item:=unit, KEY:=KEY
+    dAMOUNT.Add item:=amount, KEY:=KEY
+End Sub
+
+Function GetNAME(KEY As String)
+    If dNAME.Exists(KEY) Then
+        GetNAME = dNAME(KEY)
+    Else
+        GetNAME = -1 'or raise an error...
+    End If
+End Function
+
+Function GetUNIT(KEY As String)
+    If dUNIT.Exists(KEY) Then
+        GetUNIT = dUNIT(KEY)
+    Else
+        GetUNIT = -1 'or raise an error...
+    End If
+End Function
+
+Function GetAMOUNT(KEY As String)
+    If dAMOUNT.Exists(KEY) Then
+        GetAMOUNT = dAMOUNT(KEY)
+    Else
+        GetAMOUNT = C_TAKEOFF 'or raise an error...
+    End If
+End Function
